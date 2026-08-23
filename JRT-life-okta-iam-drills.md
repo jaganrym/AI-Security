@@ -1,5 +1,4 @@
 # IAM Drills, Rebuilt on Okta
-*Swapping Entra for Okta on the identity-specific pieces of JRT Life's drills. Defender and Purview stay as-is for threat posture and data risk, since those aren't IAM — say if you want those swapped too.*
 
 Okta's current agentic identity platform is genuinely built around three questions worth memorizing verbatim, because <cite index="22-1">Okta's own framework for the secure agentic enterprise organizes the whole problem as: Where are my agents? What can they connect to? What can they do?</cite> That structure is a gift for an interview — it gives you a ready-made way to organize any answer about agent identity.
 
