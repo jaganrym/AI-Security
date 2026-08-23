@@ -11,7 +11,7 @@
 | Agent | Job | Touches |
 |---|---|---|
 | **Intake Agent** | Chats with applicants, extracts health history and lifestyle data from free-text answers | Sensitive health data (PII/PHI-equivalent) |
-| **Underwriting Agent** | Calls Stellar's internal risk-scoring API to price a policy based on Intake's extracted data | Pricing engine, risk models |
+| **Underwriting Agent** | Calls JRT's internal risk-scoring API to price a policy based on Intake's extracted data | Pricing engine, risk models |
 | **Claims Agent** | Reads submitted claim documents, decides validity, calls the payment gateway to disburse funds | Payment API, financial exposure |
 | **Coordinator Agent** | Orchestrates the other three, tracks state across a multi-day applicant/claimant journey, escalates edge cases to a human underwriter | All of the above |
 
@@ -74,7 +74,7 @@ Define, in your own words or a diagram:
 
 ## 5. Milestone 4 — Threat Navigator for JRT Life
 
-Three threats are seeded with the generic pattern. Your job: rewrite the **Attack Scenario** column to be Stellar-Life-specific, then add two threats of your own.
+Three threats are seeded with the generic pattern. Your job: rewrite the **Attack Scenario** column to be JRT-Life-specific, then add two threats of your own.
 
 | Threat | Generic Pattern | Your JRT Life Scenario | Mitigation |
 |---|---|---|---|
