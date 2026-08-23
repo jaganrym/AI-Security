@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Identity Governance — Field Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#161A22;
+    --paper:#E9E1CC;
+    --paper-dark:#DDD1AE;
+    --paper-darker:#D2C49B;
+    --seal:#7A2727;
+    --seal-dark:#5C1D1D;
+    --brass:#A8834B;
+    --teal:#3F5F5F;
+    --text:#221F19;
+    --muted:#6B6250;
+    --rule: rgba(34,31,25,0.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.25), transparent 45%),
+      var(--paper);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:1; opacity:0.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px 120px;}
+
+  /* Cover */
+  .cover{
+    position:relative;
+    padding:64px 0 40px;
+  }
+  .tab{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    padding:6px 14px;
+    text-transform:uppercase;
+  }
+  .cover-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.06em;
+    margin-top:18px;
+  }
+  .stamp{
+    border:2px solid var(--seal);
+    color:var(--seal);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    padding:6px 12px;
+    transform:rotate(-4deg);
+    opacity:0;
+    animation: stampIn 0.5s 0.3s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  @keyframes stampIn{
+    0%{opacity:0; transform:rotate(-4deg) scale(2.2);}
+    60%{opacity:1;}
+    100%{opacity:0.85; transform:rotate(-4deg) scale(1);}
+  }
+  h1.title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(32px, 5.5vw, 54px);
+    line-height:1.05;
+    margin:22px 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--seal-dark);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+  .rule{
+    border:none;
+    border-top:1px solid var(--rule);
+    margin:28px 0;
+  }
+  .rule.thick{border-top:2px solid var(--ink);}
+
+  .lede{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-style:italic;
+    color:var(--muted);
+    max-width:640px;
+  }
+
+  /* Exhibits */
+  .exhibit{
+    margin-top:64px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .exhibit.visible{opacity:1; transform:translateY(0);}
+  .exhibit-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:20px;
+  }
+  .exhibit-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--paper);
+    background:var(--seal);
+    padding:3px 9px;
+    letter-spacing:0.08em;
+  }
+  .exhibit h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:26px;
+    margin:0;
+  }
+
+  /* Comparison table */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--paper-dark);
+    font-size:14px;
+  }
+  th,td{
+    text-align:left;
+    padding:12px 14px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  th{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    background:var(--paper-darker);
+  }
+  tr:last-child td{border-bottom:none;}
+  td.legacy{color:var(--muted);}
+  td.agentic{color:var(--seal-dark); font-weight:500;}
+
+  /* Lifecycle cards */
+  .lifecycle{
+    display:grid;
+    gap:14px;
+  }
+  .stage{
+    background:var(--paper-dark);
+    border-left:3px solid var(--brass);
+    padding:16px 18px;
+    position:relative;
+  }
+  .stage-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--brass);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .stage-name{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:600;
+    margin:2px 0 6px;
+  }
+  .stage-mandate{
+    font-size:14px;
+    color:var(--text);
+  }
+  .stage-mandate b{color:var(--seal-dark);}
+
+  /* Threat ledger */
+  .threat-card{
+    background:var(--paper-dark);
+    padding:16px 18px;
+    margin-bottom:10px;
+    border:1px dashed var(--rule);
+  }
+  .threat-name{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--seal);
+    margin-bottom:6px;
+  }
+  .threat-scenario{font-size:14px; margin:6px 0;}
+  .threat-mit{
+    font-size:13px;
+    color:var(--teal);
+    font-weight:600;
+  }
+
+  /* Case file steps */
+  .case-step{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .case-step:last-child{border-bottom:none;}
+  .case-num{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:26px;
+    color:var(--brass);
+  }
+  .case-title{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:15.5px;
+    margin-bottom:4px;
+  }
+  .case-desc{font-size:14px; color:var(--text);}
+
+  /* Talking points */
+  .phrase-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media (max-width:600px){.phrase-grid{grid-template-columns:1fr;}}
+  .phrase{
+    background:var(--ink);
+    color:var(--paper);
+    padding:14px 16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    line-height:1.5;
+  }
+  .phrase b{color:var(--brass); display:block; font-family:'IBM Plex Sans',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;}
+
+  /* Cross-exam */
+  .qa{margin-bottom:18px;}
+  .qa-q{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:16.5px;
+    color:var(--seal-dark);
+  }
+  .qa-a{font-size:14px; margin-top:6px;}
+
+  /* Footer / seal */
+  footer{
+    margin-top:80px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding-top:28px;
+    border-top:2px solid var(--ink);
+  }
+  .seal-mark{
+    width:64px; height:64px;
+    border-radius:50%;
+    border:2px solid var(--brass);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9px;
+    color:var(--brass);
+    text-align:center;
+    line-height:1.3;
+    flex-shrink:0;
+    position:relative;
+  }
+  .seal-mark::after{
+    content:'';
+    position:absolute; inset:6px;
+    border:1px solid var(--brass);
+    border-radius:50%;
+  }
+  .footer-text{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+  }
+
+  ::selection{background:var(--seal); color:var(--paper);}
+  a{color:var(--seal-dark);}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="wrap">
+
+  <div class="cover">
+    <span class="tab">Interview Preparation — Not for External Distribution</span>
+    <div class="cover-meta">
+      <span>FILE NO. AIG&#8209;2026&#8209;07</span>
+      <span class="stamp">Reviewed &amp; Ready</span>
+    </div>
+    <h1 class="title">Agentic Identity<br>Governance</h1>
+    <div class="subtitle">Field Briefing — Enterprise Architect / Security Role</div>
+    <hr class="rule thick">
+    <p class="lede">Six exhibits. Read them in order: the shift, the lifecycle, the threats, a worked case, the phrases to have loaded, and the cross-examination you should expect.</p>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-head">
+      <span class="exhibit-label">Exhibit A</span>
+      <h2>The Paradigm Shift</h2>
+    </div>
+    <table>
+      <tr><th>Dimension</th><th>Legacy IAM (MIM)</th><th>Agentic IGA</th></tr>
+      <tr><td>Reasoning engine</td><td class="legacy">Static, hardcoded logic</td><td class="agentic">LLM-based perception &amp; reasoning</td></tr>
+      <tr><td>Lifecycle duration</td><td class="legacy">Long-term, semi-permanent</td><td class="agentic">Ephemeral, task-specific, or persistent</td></tr>
+      <tr><td>Oversight mechanism</td><td class="legacy">Human / session-based</td><td class="agentic">Autonomous, continuous monitoring</td></tr>
+      <tr><td>Trust boundary</td><td class="legacy">User-to-application</td><td class="agentic">Agent-to-agent &amp; multi-agent</td></tr>
+    </table>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-head">
+      <span class="exhibit-label">Exhibit B</span>
+      <h2>The Five-Stage Lifecycle</h2>
+    </div>
+    <div class="lifecycle">
+      <div class="stage">
+        <div class="stage-num">Stage 1</div>
+        <div class="stage-name">Birth</div>
+        <div class="stage-mandate"><b>Mandate:</b> unique identification and cryptographic anchoring to prevent identity spoofing.</div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">Stage 2</div>
+        <div class="stage-name">Permissioning</div>
+        <div class="stage-mandate"><b>Mandate:</b> strict least privilege — agents never inherit excessive access from user sessions or broad tokens.</div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">Stage 3</div>
+        <div class="stage-name">Rotation</div>
+        <div class="stage-mandate"><b>Mandate:</b> periodic refresh of keys and credentials to neutralize persistent-access threats.</div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">Stage 4</div>
+        <div class="stage-name">Revocation</div>
+        <div class="stage-mandate"><b>Mandate:</b> immediate withdrawal of access on anomaly detection — neutralizes agent hijacking.</div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">Stage 5</div>
+        <div class="stage-name">Decommissioning</div>
+        <div class="stage-mandate"><b>Mandate:</b> final reasoning path recorded and cryptographically signed before memory is purged, to prevent repudiation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-head">
+      <span class="exhibit-label">Exhibit C</span>
+      <h2>Threat Navigator</h2>
+    </div>
+    <div class="threat-card">
+      <div class="threat-name">T2 — Tool Misuse / Agent Hijacking</div>
+      <div class="threat-scenario">Adversarial data is ingested by the agent, triggering unintended tool calls that exfiltrate data.</div>
+      <div class="threat-mit">Mitigation → validate agent instructions, pre-execution tool checks, rate-limiting.</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-name">T6 — Intent Breaking</div>
+      <div class="threat-scenario">An attacker redirects the agent's planning to prioritize a malicious goal over the original one.</div>
+      <div class="threat-mit">Mitigation → planning-validation frameworks, behavioral auditing by a secondary model.</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-name">T7 — Misaligned Behavior</div>
+      <div class="threat-scenario">Deceptive reasoning leads the agent to ignore safety consequences to reach a goal faster.</div>
+      <div class="threat-mit">Mitigation → behavioral constraints, multisource validation feedback loops.</div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-head">
+      <span class="exhibit-label">Exhibit D</span>
+      <h2>Case File — Three-Agent Refund System</h2>
+    </div>
+    <div class="case-steps">
+      <div class="case-step">
+        <div class="case-num">1</div>
+        <div><div class="case-title">Reframe before designing</div><div class="case-desc">State up front: this is a ReAct loop with runtime-decided control flow, not static IAM. Identity is the perimeter, not the application layer.</div></div>
+      </div>
+      <div class="case-step">
+        <div class="case-num">2</div>
+        <div><div class="case-title">Distinct Birth identity per agent</div><div class="case-desc">Ticket-Reader, Payment Agent, and Coordinator each get their own cryptographically anchored identity — never a shared service account.</div></div>
+      </div>
+      <div class="case-step">
+        <div class="case-num">3</div>
+        <div><div class="case-title">Least-privilege permissioning</div><div class="case-desc">Payment Agent gets a scoped capability (refund up to $X, approved tickets only), not the user's full account access. This is where Confused Deputy and Excessive Agency get closed off.</div></div>
+      </div>
+      <div class="case-step">
+        <div class="case-num">4</div>
+        <div><div class="case-title">JIT, ephemeral credentials</div><div class="case-desc">Payment Agent's API token is issued per transaction, not long-lived — so a leaked token can't become standing privileged access.</div></div>
+      </div>
+      <div class="case-step">
+        <div class="case-num">5</div>
+        <div><div class="case-title">Threat-model the handoffs</div><div class="case-desc">A poisoned ticket could hijack Coordinator into routing a fake refund; a misread ticket could cascade into a real one if Coordinator trusts Ticket-Reader's output uncritically.</div></div>
+      </div>
+      <div class="case-step">
+        <div class="case-num">6</div>
+        <div><div class="case-title">Autonomous rollback</div><div class="case-desc">Coordinator watches for anomalies — refund spikes, repeated validation failures — and revokes Payment Agent's credentials immediately, without waiting on a human.</div></div>
+      </div>
+      <div class="case-step">
+        <div class="case-num">7</div>
+        <div><div class="case-title">Traceability and decommissioning</div><div class="case-desc">Every refund action is logged with agent identity, tool call, parameters, and data accessed — signed and immutable, so a SOC2 or PCI DSS audit can be answered months later.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-head">
+      <span class="exhibit-label">Exhibit E</span>
+      <h2>Phrases to Have Loaded</h2>
+    </div>
+    <div class="phrase-grid">
+      <div class="phrase"><b>On the core shift</b>"Identity is the security perimeter — not the application layer."</div>
+      <div class="phrase"><b>On permissioning</b>"Agents must never inherit excessive permissions from user sessions or broad service tokens."</div>
+      <div class="phrase"><b>On credentials</b>"Just-in-time, ephemeral credentials — not standing, persistent access."</div>
+      <div class="phrase"><b>On audits</b>"Untraceability is a total loss of repudiation — that's what fails a SOC2 or ISO 42001 audit."</div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-head">
+      <span class="exhibit-label">Exhibit F</span>
+      <h2>Anticipated Cross-Examination</h2>
+    </div>
+    <div class="qa">
+      <div class="qa-q">"Why not let the Coordinator hold broad access and delegate as needed?"</div>
+      <div class="qa-a">Because that makes Coordinator a single point of privilege escalation — a compromised or manipulated Coordinator becomes a master key. Scope stays with the agent that actually needs it.</div>
+    </div>
+    <div class="qa">
+      <div class="qa-q">"How is agent-to-agent trust different from user-to-agent trust?"</div>
+      <div class="qa-a">A2A needs its own validation layer. Agents trusting each other's outputs by default is exactly how a cascading hallucination turns into a cascading action.</div>
+    </div>
+    <div class="qa">
+      <div class="qa-q">"What's the first thing that breaks if you skip traceability?"</div>
+      <div class="qa-a">Repudiation. You lose the ability to prove what happened — which fails an audit even when nothing malicious occurred.</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="seal-mark">VERIFIED<br>&amp; SIGNED</div>
+    <div class="footer-text">END OF BRIEFING — FILE AIG-2026-07 — CLEARED FOR INTERVIEW USE</div>
+  </footer>
+
+</div>
+
+<script>
+  const exhibits = document.querySelectorAll('.exhibit');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15});
+  exhibits.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
