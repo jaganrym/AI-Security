@@ -1,5 +1,5 @@
 # Practical Drills: Agentic IGA Skill-Building Blueprint
-*Applied to Stellar Life's four-agent system (Intake, Underwriting, Claims, Coordinator)*
+*Applied to JRT Life's four-agent system (Intake, Underwriting, Claims, Coordinator)*
 
 Each drill asks you to actually produce the artifact the blueprint names — not describe it. That's the difference between reciting "I'd use JIT credentials" in an interview and being able to sketch the sequence when someone says "show me."
 
@@ -11,7 +11,7 @@ Each drill asks you to actually produce the artifact the blueprint names — not
 
 ```rego
 # Pseudocode in the style of Open Policy Agent (Rego)
-package stellarlife.claims
+package JRTlife.claims
 
 default allow_disbursement = false
 
@@ -65,7 +65,7 @@ BEFORE calling risk_scoring_api:
   IF mismatch → halt, do not call tool, escalate to Coordinator
 ```
 
-Write one sentence explaining *why* this check has to happen at every tool invocation, not just once at session start. *(This is the exact question from the Stellar Life capstone's Milestone 5 — if your answer here doesn't match your policy-as-code artifact from that exercise, reconcile them.)*
+Write one sentence explaining *why* this check has to happen at every tool invocation, not just once at session start. *(This is the exact question from the JRT Life capstone's Milestone 5 — if your answer here doesn't match your policy-as-code artifact from that exercise, reconcile them.)*
 
 **Task B — Behavioral anomaly baseline:** Define a "normal" pattern and a flaggable deviation for Claims Agent.
 
@@ -88,7 +88,7 @@ Claims Agent verifies: signature valid? timestamp fresh (not replayed)?
 Claims Agent → Coordinator: signed acknowledgment
 ```
 
-**Task B — Consensus for high-risk operations:** The blueprint says high-risk actions need multiple independent agents to sign off. Design this for a disbursement over $10,000 at Stellar Life.
+**Task B — Consensus for high-risk operations:** The blueprint says high-risk actions need multiple independent agents to sign off. Design this for a disbursement over $10,000 at JRT Life.
 
 Write out: which second agent (or human) has to co-sign, what they're actually verifying (not just rubber-stamping the first agent's decision), and what happens if they disagree. *(A design that lets the second signer see only "approve/deny" without the reasoning isn't real consensus — decide what they actually get to review.)*
 
