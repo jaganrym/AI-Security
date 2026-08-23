@@ -1,4 +1,4 @@
-# Capstone Project: Securing Agentic AI at Stellar Life
+# Capstone Project: Securing Agentic AI at JRT Life
 
 *A hands-on architecture project applying the Agentic IGA framework to a real-world small-enterprise scenario.*
 
@@ -6,7 +6,7 @@
 
 ## 0. The Company Brief
 
-**Stellar Life** is an 80-person direct-to-consumer life & health insurance startup. To compete with larger insurers on speed, they're replacing a slow manual pipeline with a four-agent AI system:
+**JRT Life** is an 80-person direct-to-consumer life & health insurance startup. To compete with larger insurers on speed, they're replacing a slow manual pipeline with a four-agent AI system:
 
 | Agent | Job | Touches |
 |---|---|---|
@@ -15,7 +15,7 @@
 | **Claims Agent** | Reads submitted claim documents, decides validity, calls the payment gateway to disburse funds | Payment API, financial exposure |
 | **Coordinator Agent** | Orchestrates the other three, tracks state across a multi-day applicant/claimant journey, escalates edge cases to a human underwriter | All of the above |
 
-Stellar Life has no dedicated security architect yet — that's your role for this capstone. Leadership wants this live in production in one quarter. Your job is to make sure autonomy doesn't outpace governance.
+JRT Life has no dedicated security architect yet — that's your role for this capstone. Leadership wants this live in production in one quarter. Your job is to make sure autonomy doesn't outpace governance.
 
 ---
 
@@ -25,7 +25,7 @@ By the end of this capstone you should be able to:
 
 - Justify, in writing, why legacy IAM cannot govern this system
 - Design a full five-stage identity lifecycle for each of the four agents
-- Produce a threat model specific to Stellar Life's actual attack surface
+- Produce a threat model specific to JRT Life's actual attack surface
 - Write a least-privilege, policy-as-code permission set for each agent
 - Design a traceability/logging schema that would survive a real audit
 - Diagnose and respond to a live incident using the lifecycle stages
@@ -34,11 +34,11 @@ By the end of this capstone you should be able to:
 
 ## 2. Milestone 1 — The Paradigm Justification Memo
 
-**Task:** Write a one-page memo to Stellar Life's CTO, who is asking "why can't we just extend our existing Okta/Entra setup instead of buying into all this Agentic IGA complexity?"
+**Task:** Write a one-page memo to JRT Life's CTO, who is asking "why can't we just extend our existing Okta/Entra setup instead of buying into all this Agentic IGA complexity?"
 
 Your memo must answer, specifically for this system:
 - Why the Claims Agent's control flow can't be governed the same way as a human claims adjuster's session
-- What happens to Stellar Life's blast radius if the Claims Agent's identity is compromised, versus if a human employee's login is compromised
+- What happens to JRT Life's blast radius if the Claims Agent's identity is compromised, versus if a human employee's login is compromised
 - One sentence you'd want the CTO to remember
 
 *Self-check: if your memo doesn't mention that identity becomes the security perimeter (not the app layer), rewrite it.*
@@ -72,11 +72,11 @@ Define, in your own words or a diagram:
 
 ---
 
-## 5. Milestone 4 — Threat Navigator for Stellar Life
+## 5. Milestone 4 — Threat Navigator for JRT Life
 
 Three threats are seeded with the generic pattern. Your job: rewrite the **Attack Scenario** column to be Stellar-Life-specific, then add two threats of your own.
 
-| Threat | Generic Pattern | Your Stellar Life Scenario | Mitigation |
+| Threat | Generic Pattern | Your JRT Life Scenario | Mitigation |
 |---|---|---|---|
 | T2 — Tool Misuse | Adversarial data triggers unintended tool calls | *(rewrite: what would a malicious applicant put in a chat message to Intake Agent that eventually reaches Claims Agent?)* | |
 | T6 — Intent Breaking | Planning is redirected toward a malicious goal | *(rewrite: how might a claimant manipulate Coordinator's escalation logic to avoid human review?)* | |
@@ -116,7 +116,7 @@ Fill in every blank with a real value you'd defend in a review. Then do the same
 
 Design the log entry schema that gets written every time any agent takes an action. It must include enough fields to answer, months later: *which agent, acting under what permission, did what, to what data, and why.*
 
-Minimum fields to include: agent identity, action/tool called, parameters, data accessed, permission grant used, reasoning summary, timestamp, signature. Decide what "cryptographically signed and immutable" actually means for Stellar Life's stack (e.g., append-only log + hash chaining, or a specific approach you choose).
+Minimum fields to include: agent identity, action/tool called, parameters, data accessed, permission grant used, reasoning summary, timestamp, signature. Decide what "cryptographically signed and immutable" actually means for JRT Life's stack (e.g., append-only log + hash chaining, or a specific approach you choose).
 
 ---
 
@@ -143,7 +143,7 @@ Minimum fields to include: agent identity, action/tool called, parameters, data 
 - [ ] Memo explains the shift without just repeating buzzwords
 - [ ] All four agents have distinct, non-generic lifecycle entries
 - [ ] At least one architecture trade-off was argued from both sides
-- [ ] Threat scenarios are specific to Stellar Life's actual data flow, not copy-pasted
+- [ ] Threat scenarios are specific to JRT Life's actual data flow, not copy-pasted
 - [ ] Policy-as-code has real numbers, not placeholder blanks
 - [ ] The Midnight Claim response correctly identifies that trusting Intake Agent's output uncritically was the root failure
 
@@ -152,5 +152,5 @@ Minimum fields to include: agent identity, action/tool called, parameters, data 
 ## 10. Stretch Goals (optional)
 
 - Prototype the Coordinator's anomaly-detection rule (e.g., "flag any claim >$10k approved outside business hours") as actual pseudocode
-- Design what a "permission-aware vector database" query would look like for Stellar Life's health-data isolation requirement
-- Map your traceability schema fields to the specific audit types Stellar Life will face (SOC2, PCI DSS for payments) and note which fields serve which audit
+- Design what a "permission-aware vector database" query would look like for JRT Life's health-data isolation requirement
+- Map your traceability schema fields to the specific audit types JRT Life will face (SOC2, PCI DSS for payments) and note which fields serve which audit
