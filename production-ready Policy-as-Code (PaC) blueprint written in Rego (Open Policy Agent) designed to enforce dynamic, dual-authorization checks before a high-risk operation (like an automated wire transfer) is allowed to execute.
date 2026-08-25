@@ -1,0 +1,109 @@
+
+
+#The Policy-as-Code Blueprint (Rego)
+
+package playbooks.agentic_iga
+
+default allow = false
+
+# Rule: Enforce Secure execution boundaries
+
+allow {
+
+    # 1. Cryptographic Agent Attestation (T9)
+
+    agent_identity_is_authentic
+
+    # 2. Active Human Session Verification
+
+    human_session_is_valid
+
+
+
+    # 3. Dynamic Least-Privilege & Tool Boundaries (T2)
+
+    agent_has_tool_permission
+
+
+
+    # 4. Solves Confused Deputy: Does the triggering user have the underlying right?
+
+    human_has_action_permission
+
+
+
+    # 5. Risk-Adaptive Threshold Evaluation
+
+}
+
+
+
+# --- 1. Attestation Check (Prevents Agent Spoofing/Token Theft) ---
+
+agent_identity_is_authentic {
+
+    input.agent.attestation == "verified"
+
+    input.agent.id_token == "signed-entra-agent-id"  # Anchored cryptographically
+
+}
+
+
+
+# --- 2. Human Verification Check ---
+
+human_session_is_valid {
+
+    input.human.session_active == true
+
+    input.human.mfa_verified == true
+
+}
+
+
+
+# --- 3. Agent Tool Scope Check ---
+
+agent_has_tool_permission {
+
+    input.action.tool == "banking_api.wire_transfer"
+
+    input.agent.allowed_scopes[_] == "financial_execution"
+
+}
+
+
+
+# --- 4. Dual-Validation Check (Defeats the "Confused Deputy" Exploit) ---
+
+human_has_action_permission {
+
+    # Verifies the HUMAN who initiated the prompt actually has financial signing authority
+
+    input.human.roles[_] == "finance_manager"
+
+}
+
+
+
+# --- 5. Risk-Adaptive Telemetry Evaluation ---
+
+# Low-value transactions execute autonomously
+
+telemetry_risk_is_acceptable {
+
+    input.action.amount < 10000
+
+}
+
+# High-value transactions dynamically require low-risk scores and high model confidence
+
+telemetry_risk_is_acceptable {
+
+    input.action.amount >= 10000
+
+    input.telemetry.risk_score < 30       # Sentinel/Defender telemetry score
+
+    input.telemetry.model_confidence > 85  # Out-of-band behavioral check
+
+}
