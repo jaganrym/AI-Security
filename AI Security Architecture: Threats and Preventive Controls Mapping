@@ -1,0 +1,91 @@
+## AI Security Architecture: Threats and Preventive Controls Mapping
+This document provides a consolidated mapping of AI security threats and their corresponding preventive controls. The architecture is organized into six core security playbooks to establish a robust defense-in-depth framework for Multi-Agent Systems (MAS) and autonomous AI workflows.
+------------------------------
+## 1. Reasoning & Planning Playbook## Associated Threats
+
+* T6: Intent Breaking & Goal Manipulation – Malicious manipulation of system prompts or objectives to bypass alignment guardrails.
+* T7: Misaligned & Deceptive Behavior – Subversive optimization where the agent pursues unintended or harmful implicit goals while appearing compliant.
+* T8: Repudiation & Untraceability – Lack of definitive logging or attribution for actions taken autonomously by planning components.
+
+## Preventive Controls
+
+* Least Privilege Access: Restrict agent tool access strictly to the minimum scope required for authorized tasks.
+* Input Sanitization: Pre-filter, sanitize, and validate all incoming prompts and objective definitions before ingest.
+* Planning Validation Frameworks: Implement deterministic validation layers to detect and block unauthorized role modifications or goal alterations during runtime execution.
+
+------------------------------
+## 2. Memory & Knowledge Safeguards Playbook## Associated Threats
+
+* T1: Memory Poisoning – Injection of malicious context into long-term or short-term agent memory stores to alter future behavior.
+* T5: Cascading Hallucination Attacks – Exploitation of base-model vulnerabilities where initial errors accumulate, causing systemic failure across downstream reasoning loops.
+
+## Preventive Controls
+
+* Session Isolation: Implement strict memory segmentation between user sessions and individual agent instances.
+* Context-Aware Retrieval Policies: Enforce granular controls over data retrieval mechanisms (e.g., vector database lookups) to prevent unauthorized context injection.
+* Dual-Stage Memory Validation: Comprehensively validate and scan all inputs and internal states before committing data to either transient short-term or persistent long-term storage.
+
+------------------------------
+## 3. Tool Execution & Supply Chain Defense Playbook## Associated Threats
+
+* T2: Tool Misuse – Exploitation of exposed APIs, functions, or external tools to perform unintended operations.
+* T3: Privilege Compromise – Escalation of privileges through vulnerabilities in agent-accessible tools or integrated systems.
+* T4: Resource Overload – Denial of service (DoS) attacks targeting agent compute, token budgets, or downstream infrastructure.
+* T11: Unexpected Remote Code Execution (RCE) & Code Attacks – Execution of arbitrary malicious code generated or retrieved by the agent.
+* T17: Supply Chain Compromise – Vulnerabilities introduced through third-party dependencies, foundational models, or upstream software packages.
+
+## Preventive Controls
+
+* Transient Sandboxing: Execute all agent-generated code exclusively within ephemeral, isolated, containerized sandboxes.
+* Post-Execution Destruction: Enforce strict lifecycle controls to instantly destroy container environments immediately following execution.
+* Resource Throttling & Rate Limiting: Apply explicit execution quotas, token limits, and time-out thresholds to prevent resource exhaustion.
+
+------------------------------
+## 4. Authentication, Identity & Privilege Control Playbook## Associated Threats
+
+* T8 / T9: Identity Spoofing & Impersonation – Unauthorized entities forging agent identities to gain access to restricted environments.
+* T16: Insecure Inter-Agent Protocol Abuse – Interception or manipulation of unstructured or unauthenticated communications between distinct agents.
+
+## Preventive Controls
+
+* Non-Human Identities (NHI): Issue unique, cryptographically verifiable identities specifically for automated agents and systems.
+* Granular Access Control: Enforce strict Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC) definitions to limit horizontal movement.
+* Secure Communications: Require mutual TLS (mTLS) for all agent-to-agent (A2A) communications to ensure encryption and authentic endpoints.
+
+------------------------------
+## 5. Human Oversight & Interaction Controls Playbook## Associated Threats
+
+* T10: Overwhelming Human-in-the-Loop (HITL) – Flooding human operators with verification requests to induce alert fatigue or cause a denial-of-service state.
+* T15: Human Manipulation – Use of social engineering tactics by the AI system to deceive human operators into granting unauthorized privileges.
+
+## Preventive Controls
+
+* Risk-Scoring Engine: Deploy real-time risk scoring to dynamically prioritize high-severity or high-impact actions requiring human intervention.
+* Selective Automation: Automate low-risk, deterministic actions to minimize operator overhead and prevent alert fatigue.
+
+------------------------------
+## 6. Multi-Agent Communication & Trust Security Playbook## Associated Threats
+
+* T12: Agent Communication Poisoning – Interception, alteration, or injection of malicious data into active multi-agent communication channels.
+* T13: Rogue Agents in Multi-Agent Systems (MAS) – Compromise or unauthorized introduction of an adversarial agent within a trusted collective.
+* T14: Hijack / Human Attacks in MAS – External Takeover of agent orchestration layers by malicious third parties.
+* T16: Insecure Inter-Agent Protocol Abuse – Structural failures in the validation of cross-agent signaling systems.
+
+## Preventive Controls
+
+* Intra-MAS Encryption: Enforce pervasive mTLS and protocol-level encryption across all communication links within the Multi-Agent System.
+* Cryptographic Consensus Signatures: Require independent cryptographic confirmation from multiple designated agents before validating and authorizing high-risk system goals.
+
+------------------------------
+## Summary Matrix
+
+| Playbook Pillar | Core Threats Covered | Primary Preventive Strategy |
+|---|---|---|
+| 1. Reasoning & Planning | T6, T7, T8 | Least privilege, validation frameworks |
+| 2. Memory & Knowledge Safeguards | T1, T5 | Session isolation, memory write scans |
+| 3. Tool Execution & Supply Chain | T2, T3, T4, T11, T17 | Isolated transient container sandboxes |
+| 4. Authentication & Privilege | T8, T9, T16 | Non-Human Identities (NHI), ABAC/RBAC, mTLS |
+| 5. Human Oversight & Interaction | T10, T15 | Risk scoring, selective automation |
+| 6. Multi-Agent Trust Security | T12, T13, T14, T16 | Distributed consensus, intra-MAS encryption |
+
+
