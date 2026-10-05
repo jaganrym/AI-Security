@@ -20,7 +20,8 @@ JRT Life deployed a specialized, multi-agent AI system where each agent is ring-
 | **Coordinator Agent** | • Orchestrates the workflows of the other three agents<br>• Tracks system state across multi-day user journeys<br>• Escalates complex edge cases to human underwriters | • All of the above data streams<br>• Cross-agent communication pipelines<br>• Human-in-the-loop escalation paths |
 
 ## 🔄 Workflow Operations
-![Graph image](CaseStudyAutomatingDirect-to-ConsumerInsurancewithAgenticAI_files/image001.png)
+<img width="1145" height="920" alt="image" src="https://github.com/user-attachments/assets/287329c0-23ac-47ed-a40b-02419a8f1332" />
+
 
 ## 🔄 Multi-Agent System Workflow Description
 The diagram represents the hub-and-spoke operational flow managed by **JRT Life's** core AI system:
