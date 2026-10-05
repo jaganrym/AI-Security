@@ -1,8 +1,5 @@
 # Case Study: Automating Direct-to-Consumer Insurance with Agentic AI
 
-**Date:** Monday, October 5, 2026  
-**Time:** 11:07 AM  
-
 ## Executive Summary
 **JRT Life**, an 80-person direct-to-consumer life and health insurance startup, successfully replaced its slow, manual pipeline with a coordinated four-agent AI system. Facing fierce competition from legacy insurers, the company leveraged agentic architecture to dramatically accelerate application processing and claims fulfillment while maintaining strict security boundaries over sensitive financial and health data.
 
